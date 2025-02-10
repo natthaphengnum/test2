@@ -9,10 +9,12 @@
         body {
             text-align: center;
             font-family: 'Arial', sans-serif;
-            background-color: #ffe6f2;
+            background-color: #ffcccc; /* พื้นหลังสีแดงอ่อน */
             color: #ff4081;
             margin: 0;
             padding: 20px;
+            overflow: hidden; /* ป้องกันการเลื่อนหน้าจอ */
+            position: relative;
         }
         h1 {
             font-size: 28px;
@@ -40,6 +42,45 @@
             white-space: pre-line;
             display: inline-block;
         }
+
+        /* เอฟเฟกต์หัวใจลอย */
+        .heart {
+            position: absolute;
+            color: red;
+            font-size: 24px;
+            animation: floatUp 4s linear infinite;
+        }
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh);
+                opacity: 0;
+            }
+        }
+
+        /* เอฟเฟกต์ดาวตก */
+        .shooting-star {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            background-color: pink;
+            box-shadow: 0 0 8px pink;
+            border-radius: 50%;
+            animation: shootingStar 2s linear infinite;
+        }
+        @keyframes shootingStar {
+            0% {
+                transform: translate(100vw, -10vh);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(-10vw, 100vh);
+                opacity: 0;
+            }
+        }
     </style>
 </head>
 <body>
@@ -51,7 +92,7 @@
     <p id="message" class="hidden"></p>
 
     <button onclick="playMusic()">🎵 กดเพื่อเปิดเพลง</button>
-    <iframe id="youtubePlayer" width="0" height="0" src="https://www.youtube.com/embed/jx28LXc3Yvw?enablejsapi=1" frameborder="0" allow="autoplay"></iframe>
+    <div id="player"></div>
 
     <script>
         function showMessage() {
@@ -71,9 +112,61 @@
             typeWriter();
         }
 
+        // โหลด YouTube API
+        var tag = document.createElement('script');
+        tag.src = "https://www.youtube.com/iframe_api";
+        var firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+        var player;
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('player', {
+                height: '0',
+                width: '0',
+                videoId: 'jx28LXc3Yvw', // ใส่ ID วิดีโอ YouTube
+                playerVars: { 'autoplay': 0, 'loop': 1, 'playlist': 'jx28LXc3Yvw' }
+            });
+        }
+
         function playMusic() {
-            var iframe = document.getElementById("youtubePlayer");
-            iframe.src += "&autoplay=1";
+            if (player) {
+                player.playVideo(); // เล่นเพลงเมื่อกดปุ่ม
+                startHearts(); // เริ่มหัวใจลอยขึ้น
+                startShootingStars(); // เริ่มดาวตก
+            }
+        }
+
+        // ฟังก์ชันสร้างหัวใจลอยขึ้น
+        function startHearts() {
+            setInterval(() => {
+                let heart = document.createElement("div");
+                heart.className = "heart";
+                heart.innerHTML = "❤️";
+                heart.style.left = Math.random() * 100 + "vw";
+                heart.style.fontSize = Math.random() * 20 + 20 + "px";
+                heart.style.animationDuration = Math.random() * 3 + 2 + "s";
+                document.body.appendChild(heart);
+
+                setTimeout(() => {
+                    heart.remove();
+                }, 4000);
+            }, 300);
+        }
+
+        // ฟังก์ชันสร้างดาวตก
+        function startShootingStars() {
+            setInterval(() => {
+                let star = document.createElement("div");
+                star.className = "shooting-star";
+                star.style.left = Math.random() * 100 + "vw";
+                star.style.top = Math.random() * 50 + "vh";
+                star.style.animationDuration = Math.random() * 2 + 1 + "s";
+                document.body.appendChild(star);
+
+                setTimeout(() => {
+                    star.remove();
+                }, 2000);
+            }, 500);
         }
     </script>
 
