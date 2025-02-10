@@ -73,6 +73,15 @@
             color: white;
         }
 
+        /* ข้อความเซอร์ไพรส์ */
+        #message {
+            font-size: 22px;
+            font-weight: bold;
+            color: white;
+            margin-top: 20px;
+            display: none;
+        }
+
         /* เอฟเฟกต์หัวใจลอย */
         .heart {
             position: absolute;
@@ -91,36 +100,4 @@
             }
         }
 
-        /* เอฟเฟกต์ดาวตก */
-        .shooting-star {
-            position: absolute;
-            width: 5px;
-            height: 5px;
-            background-color: pink;
-            box-shadow: 0 0 8px pink;
-            border-radius: 50%;
-            animation: shootingStar 2s linear infinite;
-        }
-        @keyframes shootingStar {
-            0% {
-                transform: translate(100vw, -10vh);
-                opacity: 1;
-            }
-            100% {
-                transform: translate(-10vw, 100vh);
-                opacity: 0;
-            }
-        }
-    </style>
-</head>
-<body>
-
-    <h1>สุขสันต์วันวาเลนไทน์นะที่รัก! 💘</h1>
-    <button onclick="playMusic()">🎵 กดเพื่อเปิดเพลง</button>
-    
-    <div class="record-container">
-        <div class="record">
-            <img src="https://yt3.googleusercontent.com/ytc/AIdro_mOnqMkA1pfhFtKyvH7aMlFsx5OaOeQH5RbGykb7w=s900-c-k-c0x00ffffff-no-rj" alt="Album Cover">
-        </div>
-    </div>
-    <p class="
+        /* เอฟเฟกต์ดาว
