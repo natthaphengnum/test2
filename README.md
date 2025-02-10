@@ -159,7 +159,6 @@
             document.getElementById('message').style.display = "block";
             playMusic();
             createFloatingHearts();
-            createShootingStars();
         }
 
         function playMusic() {
@@ -170,7 +169,7 @@
 
         // หัวใจลอยขึ้น
         function createFloatingHearts() {
-            for (let i = 0; i < 10; i++) {
+            setInterval(() => {
                 let heart = document.createElement("div");
                 heart.innerHTML = "❤️";
                 heart.classList.add("heart");
@@ -180,20 +179,23 @@
                 heart.style.animationDuration = (Math.random() * 3 + 2) + "s";
                 document.body.appendChild(heart);
                 setTimeout(() => heart.remove(), 4000);
-            }
+            }, 500);
         }
 
-        // ดาวตก
+        // ดาวตก (ทำให้ตกตลอดเวลา)
         function createShootingStars() {
-            for (let i = 0; i < 5; i++) {
+            setInterval(() => {
                 let star = document.createElement("div");
                 star.classList.add("shooting-star");
                 star.style.left = Math.random() * 100 + "vw";
                 star.style.top = Math.random() * 50 + "vh";
                 document.body.appendChild(star);
                 setTimeout(() => star.remove(), 2000);
-            }
+            }, 1000); // ดาวตกทุกๆ 1 วินาที
         }
+
+        // ทำให้ดาวตกตลอดเวลาเมื่อโหลดหน้าเว็บ
+        createShootingStars();
     </script>
 
 </body>
