@@ -100,4 +100,101 @@
             }
         }
 
-        /* เอฟเฟกต์ดาว
+        /* เอฟเฟกต์ดาวตก */
+        .shooting-star {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            background-color: pink;
+            box-shadow: 0 0 8px pink;
+            border-radius: 50%;
+            animation: shootingStar 2s linear infinite;
+        }
+        @keyframes shootingStar {
+            0% {
+                transform: translate(100vw, -10vh);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(-10vw, 100vh);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>สุขสันต์วันวาเลนไทน์นะที่รัก! 💘</h1>
+    <button onclick="showSurprise()">💌 กดเพื่อเซอร์ไพรส์</button>
+
+    <div id="message" class="hidden">ฉันรักเธอนะ! ❤️</div>
+
+    <div class="record-container">
+        <div class="record">
+            <img src="https://yt3.googleusercontent.com/ytc/AIdro_mOnqMkA1pfhFtKyvH7aMlFsx5OaOeQH5RbGykb7w=s900-c-k-c0x00ffffff-no-rj" alt="Album Cover">
+        </div>
+    </div>
+    <p class="song-title">💖 เพลง: The Loveliest Time - Carly Rae Jepsen 💖</p>
+
+    <div id="player"></div>
+
+    <script>
+        // โหลด YouTube API
+        var tag = document.createElement('script');
+        tag.src = "https://www.youtube.com/iframe_api";
+        var firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+        var player;
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('player', {
+                height: '0',
+                width: '0',
+                videoId: 'jx28LXc3Yvw', // ใส่ ID วิดีโอ YouTube
+                playerVars: { 'autoplay': 0, 'loop': 1, 'playlist': 'jx28LXc3Yvw' }
+            });
+        }
+
+        function showSurprise() {
+            document.getElementById('message').style.display = "block";
+            playMusic();
+            createFloatingHearts();
+            createShootingStars();
+        }
+
+        function playMusic() {
+            if (player) {
+                player.playVideo();
+            }
+        }
+
+        // หัวใจลอยขึ้น
+        function createFloatingHearts() {
+            for (let i = 0; i < 10; i++) {
+                let heart = document.createElement("div");
+                heart.innerHTML = "❤️";
+                heart.classList.add("heart");
+                heart.style.left = Math.random() * 100 + "vw";
+                heart.style.top = "100vh";
+                heart.style.position = "absolute";
+                heart.style.animationDuration = (Math.random() * 3 + 2) + "s";
+                document.body.appendChild(heart);
+                setTimeout(() => heart.remove(), 4000);
+            }
+        }
+
+        // ดาวตก
+        function createShootingStars() {
+            for (let i = 0; i < 5; i++) {
+                let star = document.createElement("div");
+                star.classList.add("shooting-star");
+                star.style.left = Math.random() * 100 + "vw";
+                star.style.top = Math.random() * 50 + "vh";
+                document.body.appendChild(star);
+                setTimeout(() => star.remove(), 2000);
+            }
+        }
+    </script>
+
+</body>
+</html>
